@@ -57,11 +57,19 @@ chromadb==1.5.9
 weaviate-client==4.20.3
 opensearch-py==3.2.0
 
-transformers==5.5.4
-sentence-transformers==5.5.1
-accelerate==1.13.0
+# ENDGAME: local sentence-transformers / transformers / torch stack DISABLED.
+# Embeddings + reranking are served by the axum-embed sidecar (fastembed-rs)
+# via RAG_EMBEDDING_ENGINE=openai and RAG_RERANKING_ENGINE=external.
+# Removing these saves ~2.5GB image size and significant RAM at runtime.
+# To re-enable local embeddings, uncomment the lines below AND restore the
+# torch install + sentence-transformers pre-download steps in the Dockerfile.
+# transformers==5.5.4
+# sentence-transformers==5.5.1
+# accelerate==1.13.0
+# einops==0.8.2
+# colbert-ai==0.2.22
+
 pyarrow==20.0.0 # fix: pin pyarrow version to 20 for rpi compatibility #15897
-einops==0.8.2 
 
 ftfy==6.3.1
 chardet==7.4.3
@@ -132,8 +140,6 @@ pinecone==6.0.2
 oracledb==3.4.2
 
 av==14.0.1 # Caution: Set due to FATAL FIPS SELFTEST FAILURE, see discussion https://github.com/open-webui/open-webui/discussions/15720
-
-colbert-ai==0.2.22
 
 
 ## Tests
